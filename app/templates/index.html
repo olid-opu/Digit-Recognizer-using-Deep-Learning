@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digit Recognizer</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Digit Recognizer</h1>
+        <p>Draw a digit from 0 to 9</p>
+
+        <canvas id="canvas" width="280" height="280"></canvas>
+
+        <div class="buttons">
+            <button id="predictBtn">Predict</button>
+            <button id="clearBtn">Clear</button>
+        </div>
+
+        <div class="result">
+            <h2 id="predictionText">Prediction: -</h2>
+            <p id="confidenceText">Confidence: -</p>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
