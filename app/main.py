@@ -25,12 +25,18 @@ templates = Jinja2Templates(directory=str(APP_DIR / "templates"))
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load model
-model = CNNModel().to(device)
-if not MODEL_PATH.exists():
-    raise FileNotFoundError(f"Model file not found at: {MODEL_PATH}")
+model = None
+model_load_error = None
+try:
+    model = CNNModel().to(device)
+    if not MODEL_PATH.exists():
+        raise FileNotFoundError(f"Model file not found at: {MODEL_PATH}")
 
-model.load_state_dict(torch.load(str(MODEL_PATH), map_location=device))
-model.eval()
+    state_dict = torch.load(str(MODEL_PATH), map_location=device)
+    model.load_state_dict(state_dict)
+    model.eval()
+except Exception as e:
+    model_load_error = str(e)
 
 
 class ImageData(BaseModel):
@@ -44,6 +50,15 @@ def home(request: Request):
 
 @app.post("/predict")
 def predict(data: ImageData):
+    if model is None:
+        return JSONResponse(
+            status_code=503,
+            content={
+                "error": "Model is not available",
+                "details": model_load_error,
+            },
+        )
+
     try:
         image_array = preprocess_base64_image(data.image)
         image_tensor = torch.from_numpy(image_array).to(device)
