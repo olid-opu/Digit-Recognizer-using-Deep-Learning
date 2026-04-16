@@ -1,3 +1,6 @@
+# Live: 
+https://digit-recognizer-using-deep-learning.onrender.com
+
 # Handwritten Digit Recognizer (CNN + FastAPI)
 
 A full-stack deep learning project that recognizes handwritten digits using a Convolutional Neural Network (CNN) built with PyTorch and deployed via FastAPI. Users can draw a digit (0-9) directly in the browser, and the model predicts the digit in real time.
